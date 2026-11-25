@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AcehHypeTrip — Hidden Gem &amp; Jalur Alam Aceh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;0,9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --color-warmbg: #f4efe6;
+      --color-warmcard: #fffdf9;
+      --color-header-bg: rgba(249, 246, 240, 0.95);
+      --color-forest: #123524;
+      --color-forest-hover: #1c4f36;
+      --color-terracotta: #c85a32;
+      --color-terracotta-hover: #ad4925;
+      --color-ochre: #d49b27;
+      --color-ochre-hover: #be871b;
+      --color-sage: #ebe3d5;
+      --color-border: #dfd5c5;
+      --color-border-strong: #d6cbb9;
+      --color-danger: #b91c1c;
+      --color-danger-hover: #991b1b;
+      --color-success-bg: #eef3ee;
+      --color-success-border: #b9d0be;
+
+      --font-serif: 'Fraunces', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+      --radius-sm: 0.5rem;
+      --radius-md: 0.75rem;
+      --radius-lg: 1rem;
+      --radius-full: 9999px;
+
+      --shadow-card: 0 8px 24px rgba(18, 53, 36, 0.06);
+      --shadow-card-hover: 0 14px 30px rgba(18, 53, 36, 0.11);
+      --shadow-toast: 0 10px 25px rgba(18, 53, 36, 0.2);
+      --container-max: 72rem;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--color-warmbg);
+      color: var(--color-forest);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4 { margin: 0; font-family: var(--font-serif); line-height: 1.2; }
+    p { margin: 0; }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; color: inherit; }
+    :focus-visible { outline: 2px solid var(--color-terracotta); outline-offset: 2px; }
+    .hidden { display: none !important; }
+
+    .text-terracotta { color: var(--color-terracotta); }
+    .text-ochre { color: var(--color-ochre); }
+    .text-muted { color: rgba(18, 53, 36, 0.7); }
+    .font-mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+    .container { width: 100%; max-width: var(--container-max); margin-inline: auto; padding-inline: 1rem; }
+    @media (min-width: 640px) { .container { padding-inline: 1.5rem; } }
+
+    .site-main { flex: 1; }
+    .view-animate { animation: fadePanel 0.24s ease; }
+    @keyframes fadePanel { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Header */
+    .site-header { position: sticky; top: 0; z-index: 30; background-color: var(--color-header-bg); backdrop-filter: blur(8px); border-bottom: 1px solid var(--color-border); }
+    .header-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 0.95rem; }
+    .brand-logo { font-family: var(--font-sans); font-weight: 900; font-size: 1.35rem; letter-spacing: -0.02em; color: var(--color-forest); }
+    .brand-logo--light { color: var(--color-warmcard); }
+
+    .mobile-menu-btn { display: inline-flex; flex-direction: column; gap: 5px; padding: 0.5rem; border: 1px solid var(--color-border-strong); border-radius: var(--radius-sm); background: var(--color-warmcard); cursor: pointer; }
+    .mobile-menu-btn span { display: block; width: 20px; height: 2px; background-color: var(--color-forest); }
+    .site-nav { display: none; width: 100%; flex-direction: column; gap: 0.35rem; padding-top: 0.5rem; border-top: 1px solid var(--color-border); }
+    .site-nav.is-open { display: flex; }
+    .nav-link { padding: 0.5rem 0.75rem; border-radius: var(--radius-sm); font-size: 0.875rem; font-weight: 700; color: rgba(18, 53, 36, 0.82); transition: color 0.18s ease, background-color 0.18s ease; }
+    .nav-link:hover, .nav-link.is-active { color: var(--color-terracotta); }
+    .nav-admin-pill { background-color: var(--color-forest); color: var(--color-warmcard) !important; }
+    .nav-admin-pill:hover { background-color: var(--color-terracotta); }
+    @media (min-width: 768px) {
+      .mobile-menu-btn { display: none; }
+      .site-nav { display: flex; width: auto; flex-direction: row; align-items: center; gap: 0.75rem; padding-top: 0; border-top: none; }
+    }
+
+    /* Sections & Grids */
+    .section-pad { padding-block: 3.5rem; }
+    .section-pad-sm { padding-block: 2.5rem; }
+    .section-header { text-align: center; max-width: 42rem; margin-inline: auto; margin-bottom: 2rem; }
+    .section-header h2 { font-size: clamp(1.6rem, 3vw, 2.35rem); margin-bottom: 0.5rem; }
+
+    .hero-banner {
+      min-height: 500px; display: flex; align-items: center; color: var(--color-warmcard); border-bottom: 4px solid var(--color-ochre);
+      background: linear-gradient(100deg, rgba(18, 53, 36, 0.93) 0%, rgba(18, 53, 36, 0.72) 55%, rgba(18, 53, 36, 0.35) 100%), url('https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1800&q=85') center/cover no-repeat;
+    }
+    .hero-content { padding-block: 4rem; }
+    .hero-title { font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight: 800; max-width: 48rem; margin-bottom: 1.25rem; }
+    .hero-desc { color: rgba(255, 253, 249, 0.9); font-size: clamp(0.95rem, 1.5vw, 1.125rem); max-width: 42rem; margin-bottom: 2rem; line-height: 1.65; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+    .grid-cards { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+    @media (min-width: 640px) { .grid-cards { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .grid-cards { grid-template-columns: repeat(3, 1fr); } }
+
+    .grid-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    @media (min-width: 768px) { .grid-gallery { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 1024px) { .grid-gallery { grid-template-columns: repeat(4, 1fr); } }
+
+    .about-band { background-color: var(--color-sage); border-block: 1px solid var(--color-border); }
+    .grid-2 { display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: center; }
+    @media (min-width: 768px) { .grid-2 { grid-template-columns: repeat(2, 1fr); } }
+
+    .grid-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+    @media (min-width: 1024px) { .grid-stats { grid-template-columns: repeat(4, 1fr); } }
+
+    .narrow-wrap { max-width: 36rem; margin-inline: auto; }
+    .narrow-wrap-sm { max-width: 28rem; margin-inline: auto; }
+
+    /* Footer */
+    .site-footer { background-color: var(--color-forest); color: rgba(255, 253, 249, 0.9); border-top: 4px solid var(--color-ochre); padding-block: 2.5rem; }
+    .footer-inner { display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 1rem; font-size: 0.85rem; text-align: center; }
+    @media (min-width: 640px) { .footer-inner { flex-direction: row; text-align: left; } .footer-meta { text-align: right; } }
+    .footer-sub { color: rgba(255, 253, 249, 0.7); margin-top: 0.25rem; }
+    .footer-meta { color: rgba(255, 253, 249, 0.78); }
+    .footer-admin-wrap { margin-top: 0.45rem; }
+    .footer-admin-link { color: var(--color-ochre); text-decoration: underline; text-underline-offset: 4px; font-size: 0.78rem; font-weight: 700; }
+
+    /* Components */
+    .editorial-card { background-color: var(--color-warmcard); border: 1px solid var(--color-border); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease; }
+    .editorial-card--hover:hover { transform: translateY(-4px); box-shadow: var(--shadow-card-hover); border-color: var(--color-terracotta); }
+    .card-pad { padding: 1.5rem; }
+
+    .badge { display: inline-block; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.3rem 0.7rem; border-radius: var(--radius-sm); }
+    .badge--ochre { background-color: var(--color-ochre); color: var(--color-forest); }
+    .badge--date { background-color: var(--color-success-bg); color: var(--color-forest); border: 1px solid var(--color-success-border); text-transform: none; letter-spacing: normal; }
+    .badge--forest { background-color: var(--color-forest); color: var(--color-ochre); }
+    .badge--pill { border-radius: var(--radius-full); }
+    .badge--status-ok { background-color: var(--color-success-bg); color: var(--color-forest); }
+    .badge--status-muted { background-color: var(--color-sage); color: rgba(18, 53, 36, 0.75); }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem; padding: 0.7rem 1.25rem; border: 1px solid transparent; border-radius: var(--radius-sm); font-size: 0.875rem; font-weight: 700; cursor: pointer; transition: background-color 0.18s ease, color 0.18s ease, opacity 0.18s ease; }
+    .btn:disabled { opacity: 0.55; cursor: not-allowed; }
+    .btn--lg { padding: 0.85rem 1.5rem; font-size: 0.95rem; }
+    .btn--sm { padding: 0.45rem 0.85rem; font-size: 0.78rem; }
+    .btn--xs { padding: 0.28rem 0.6rem; font-size: 0.74rem; }
+    .btn--full { width: 100%; }
+    .btn--primary { background-color: var(--color-terracotta); color: #ffffff; }
+    .btn--primary:hover:not(:disabled) { background-color: var(--color-terracotta-hover); }
+    .btn--forest { background-color: var(--color-forest); color: var(--color-warmcard); }
+    .btn--forest:hover:not(:disabled) { background-color: var(--color-forest-hover); }
+    .btn--ochre { background-color: var(--color-ochre); color: var(--color-forest); font-weight: 800; }
+    .btn--ochre:hover:not(:disabled) { background-color: var(--color-ochre-hover); }
+    .btn--ghost { background-color: rgba(255, 253, 249, 0.15); border-color: rgba(255, 253, 249, 0.4); color: var(--color-warmcard); }
+    .btn--ghost:hover:not(:disabled) { background-color: rgba(255, 253, 249, 0.25); }
+    .btn--sage { background-color: var(--color-sage); color: var(--color-forest); }
+    .btn--sage:hover:not(:disabled) { background-color: #dfd4c1; }
+    .btn--danger { background-color: var(--color-danger); color: #ffffff; }
+    .btn--danger:hover:not(:disabled) { background-color: var(--color-danger-hover); }
+    .btn--outline { background-color: var(--color-warmcard); border-color: var(--color-border-strong); color: var(--color-forest); }
+    .btn--outline:hover:not(:disabled) { background-color: var(--color-sage); }
+
+    .back-link { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.875rem; font-weight: 700; color: rgba(18, 53, 36, 0.78); margin-bottom: 1rem; }
+    .back-link:hover { color: var(--color-terracotta); }
+
+    .filter-bar { display: grid; grid-template-columns: 1fr; gap: 0.9rem; padding: 1.25rem; margin-bottom: 2rem; align-items: end; }
+    @media (min-width: 768px) { .filter-bar { grid-template-columns: 2fr 1.3fr 0.7fr; } }
+
+    .form-stack { display: flex; flex-direction: column; gap: 1rem; }
+    .form-grid-2 { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+    .form-grid-3 { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+    @media (min-width: 640px) { .form-grid-2 { grid-template-columns: repeat(2, 1fr); } .form-grid-3 { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .form-grid-3 { grid-template-columns: repeat(3, 1fr); } }
+
+    .form-label { display: block; font-size: 0.73rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.35rem; }
+    .form-control { width: 100%; padding: 0.62rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--color-border-strong); background-color: #ffffff; font-size: 0.875rem; }
+    textarea.form-control { resize: vertical; min-height: 6.5rem; line-height: 1.55; }
+    .form-hint { font-size: 0.72rem; color: rgba(18, 53, 36, 0.65); margin-top: 0.25rem; }
+    .alert-error { padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); background-color: #fef2f2; border: 1px solid #fecaca; color: var(--color-danger); font-size: 0.8rem; font-weight: 700; }
+    .summary-box { background-color: var(--color-sage); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+
+    .trip-card { overflow: hidden; display: flex; flex-direction: column; }
+    .trip-card__media { position: relative; height: 13rem; background-color: var(--color-sage); overflow: hidden; }
+    .trip-card__media img { width: 100%; height: 100%; object-fit: cover; }
+    .trip-card__map-chip {
+      position: absolute; right: 0.75rem; bottom: 0.75rem;
+      background-color: rgba(18, 53, 36, 0.88); color: var(--color-warmcard);
+      border: 1px solid rgba(212, 155, 39, 0.7); border-radius: var(--radius-full);
+      padding: 0.35rem 0.75rem; font-size: 0.74rem; font-weight: 700; cursor: pointer;
+      backdrop-filter: blur(4px); transition: background-color 0.18s ease;
+    }
+    .trip-card__map-chip:hover { background-color: var(--color-terracotta); }
+
+    .trip-card__body { padding: 1.25rem; display: flex; flex-direction: column; flex: 1; }
+    .trip-card__title { font-size: 1.25rem; margin: 0.55rem 0 0.25rem; }
+    .trip-card__loc { font-size: 0.78rem; font-weight: 600; color: rgba(18, 53, 36, 0.72); margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+    .trip-card__desc { font-size: 0.875rem; color: rgba(18, 53, 36, 0.82); line-height: 1.6; margin-bottom: 1rem; flex: 1; }
+    .trip-card__footer { padding-top: 0.85rem; border-top: 1px solid #e8dfd1; display: flex; align-items: flex-end; justify-content: space-between; gap: 0.75rem; }
+    .price-tag { font-size: 1.15rem; font-weight: 800; color: var(--color-terracotta); }
+    .price-tag span { font-size: 0.75rem; font-weight: 500; color: rgba(18, 53, 36, 0.65); }
+
+    .gallery-card { overflow: hidden; cursor: pointer; }
+    .gallery-card img { width: 100%; height: 11.5rem; object-fit: cover; }
+    .gallery-card figcaption { padding: 0.65rem 0.85rem; font-size: 0.78rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .about-img { width: 100%; height: 20rem; object-fit: cover; border-radius: var(--radius-lg); border: 2px solid var(--color-ochre); }
+
+    .admin-header { display: flex; flex-direction: column; gap: 1rem; padding-bottom: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--color-border); }
+    @media (min-width: 640px) { .admin-header { flex-direction: row; align-items: center; justify-content: space-between; } }
+    .admin-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .table-wrap { overflow-x: auto; }
+    .data-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem; }
+    .data-table thead { background-color: var(--color-forest); color: var(--color-warmcard); font-size: 0.73rem; text-transform: uppercase; }
+    .data-table th, .data-table td { padding: 0.85rem; border-bottom: 1px solid #e8dfd1; }
+    .data-table tbody tr:hover { background-color: rgba(235, 227, 213, 0.45); }
+
+    .app-modal { border: none; border-radius: var(--radius-lg); padding: 0; max-width: 40rem; width: calc(100% - 2rem); background: var(--color-warmcard); color: var(--color-forest); box-shadow: 0 24px 48px rgba(18, 53, 36, 0.28); }
+    .app-modal::backdrop { background: rgba(18, 53, 36, 0.72); backdrop-filter: blur(3px); }
+    .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; border-bottom: 1px solid var(--color-border); }
+    .modal-title { font-size: 1.15rem; }
+    .modal-close-btn { background: transparent; border: none; font-size: 1.6rem; line-height: 1; cursor: pointer; color: var(--color-forest); }
+    .modal-body { padding: 1.25rem; }
+
+    .toast-container { position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 60; display: flex; flex-direction: column; gap: 0.5rem; max-width: 22rem; pointer-events: none; }
+    .toast { padding: 0.75rem 1rem; border-radius: var(--radius-md); border: 1px solid var(--color-ochre); background-color: var(--color-forest); color: var(--color-warmcard); font-size: 0.84rem; font-weight: 600; box-shadow: var(--shadow-toast); transition: opacity 0.25s ease; }
+    .toast--error { background-color: var(--color-danger-hover); border-color: #fca5a5; }
+  </style>
+</head>
+<body>
+  <div id="toast-container" class="toast-container" role="status" aria-live="polite"></div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#home" class="brand-logo">ACEH<span class="text-terracotta">HYPE</span>TRIP<span class="text-ochre">.</span></a>
+      <button id="mobile-menu-btn" type="button" class="mobile-menu-btn" aria-expanded="false" aria-label="Buka menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="primary-nav" class="site-nav">
+        <a href="#home" class="nav-link" data-route="home">Beranda</a>
+        <a href="#catalog" class="nav-link" data-route="catalog">Destinasi</a>
+        <a href="#gallery" class="nav-link" data-route="gallery">Galeri</a>
+        <a href="#about" class="nav-link" data-route="about">Tentang Kami</a>
+        <a href="#track" class="nav-link" data-route="track">Cek Pesanan</a>
+        <a href="#admin" id="header-admin-badge" class="nav-link nav-admin-pill hidden" data-route="admin">Panel Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="site-main"></main>
+
+  <dialog id="app-modal" class="app-modal">
+    <div class="modal-header">
+      <h3 id="app-modal-title" class="modal-title">Pratinjau</h3>
+      <button id="app-modal-close" type="button" class="modal-close-btn" aria-label="Tutup">&times;</button>
+    </div>
+    <div id="app-modal-body" class="modal-body"></div>
+  </dialog>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <span class="brand-logo brand-logo--light">ACEH<span class="text-terracotta">HYPE</span>TRIP<span class="text-ochre">.</span></span>
+        <p class="footer-sub">Hidden Gem &amp; Jalur Alam Aceh • Open Trip Terarah.</p>
+      </div>
+      <div class="footer-meta">
+        <p>Lhok Ketapang • Savana Siron • Lhok Mata Ie • Luthu • Selawah Agam • Monceunong • Peuncari Cot • Cot Goh Dua</p>
+        <p class="footer-admin-wrap">
+          <a href="#admin" class="footer-admin-link">Portal Pengelola (Admin)</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const FALLBACK_IMG = 'data:image/svg+xml;utf8,' + encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+        <rect width="800" height="500" fill="#123524"/>
+        <circle cx="400" cy="230" r="120" fill="none" stroke="#d49b27" stroke-width="4" stroke-dasharray="12 8"/>
+        <polygon points="400,130 430,202 508,208 448,258 468,334 400,292 332,334 352,258 292,208 370,202" fill="#c85a32" opacity="0.85"/>
+        <text x="400" y="425" fill="#f4efe6" font-family="sans-serif" font-size="22" font-weight="bold" text-anchor="middle">AcehHypeTrip • Hidden Gem Aceh</text>
+      </svg>
+    `);
+
+    const SEED_DATA = {
+      destinations: [
+        { id: 1, name: 'Lhok Ketapang', location: 'Ujong Pancu, Aceh Besar', map_query: 'Pantai Lhok Keutapang Ujong Pancu Aceh Besar', trip_date: '2026-12-06', price: 165000, quota: 18, image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80', description: 'Eksplorasi sudut pesisir tersembunyi Lhok Ketapang dengan suasana tenang, angin laut segar, dan spot foto alami.', status: 'Aktif' },
+        { id: 2, name: 'Savana Siron', location: 'Kuta Cot Glie, Aceh Besar', map_query: 'Bukit Savana Siron Krueng Kuta Cot Glie Aceh Besar', trip_date: '2026-12-13', price: 145000, quota: 22, image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80', description: 'Hamparan padang savana hijau berbukit di Aceh Besar yang cocok untuk wisata alam santai dan dokumentasi perjalanan.', status: 'Aktif' },
+        { id: 3, name: 'Lhok Mata Ie', location: 'Peukan Bada, Aceh Besar', map_query: 'Pantai Lhok Mata Ie Ujong Pancu Aceh Besar', trip_date: '2026-12-20', price: 155000, quota: 20, image: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=900&q=80', description: 'Teluk kecil tersembunyi di balik tebing dan perbukitan Aceh Besar dengan panorama laut lepas dan suasana damai.', status: 'Aktif' },
+        { id: 4, name: 'Air Terjun Luthu', location: 'Suka Makmur, Aceh Besar', map_query: 'Wisata Air Terjun Luthu Suka Makmur Aceh Besar', trip_date: '2026-12-27', price: 235000, quota: 14, image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=900&q=80', description: 'Menyusuri jalur alam dataran tinggi menuju Air Terjun Luthu yang berudara sejuk dan jauh dari keramaian.', status: 'Aktif' },
+        { id: 5, name: 'Air Terjun Selawah Agam', location: 'Seulawah, Aceh Besar', map_query: 'Gunung Seulawah Agam Aceh Besar', trip_date: '2027-01-03', price: 195000, quota: 16, image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80', description: 'Petualangan menyegarkan di kawasan kaki Gunung Seulawah Agam dengan aliran air jernih dan hutan asri.', status: 'Aktif' },
+        { id: 6, name: 'Air Terjun Monceunong', location: 'Indrapuri, Aceh Besar', map_query: 'Air Terjun Mon Ceunong Aneuk Glee Indrapuri Aceh Besar', trip_date: '2027-01-10', price: 175000, quota: 16, image: 'https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=900&q=80', description: 'Rute tersembunyi menuju Air Terjun Monceunong dengan rimbun pepohonan asri dan suasana alam yang masih alami.', status: 'Aktif' },
+        { id: 7, name: 'Air Terjun Peuncari Cot', location: 'Kota Jantho, Aceh Besar', map_query: 'Air Terjun Peucari Kota Jantho Aceh Besar', trip_date: '2027-01-17', price: 180000, quota: 16, image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=900&q=80', description: 'Trip jalur bukit dan hutan menuju Air Terjun Peuncari Cot bagi pencinta eksplorasi alam yang jarang dikunjungi.', status: 'Aktif' },
+        { id: 8, name: 'Bukit Cot Goh Dua', location: 'Aceh Besar', map_query: 'Bukit Cot Goh Dua Aceh Besar', trip_date: '2027-01-24', price: 150000, quota: 20, image: 'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=900&q=80', description: 'Menikmati panorama perbukitan dan lanskap terbuka dari Bukit Cot Goh Dua saat pagi atau sore hari.', status: 'Aktif' }
+      ],
+      gallery: [
+        { id: 1, image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80', caption: 'Suasana pesisir Lhok Ketapang' },
+        { id: 2, image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80', caption: 'Padang Savana Siron Aceh Besar' },
+        { id: 3, image: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=800&q=80', caption: 'Teluk tenang Lhok Mata Ie' },
+        { id: 4, image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=800&q=80', caption: 'Aliran Air Terjun Luthu' },
+        { id: 5, image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80', caption: 'Kawasan sejuk Selawah Agam' },
+        { id: 6, image: 'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=800&q=80', caption: 'Panorama Bukit Cot Goh Dua' }
+      ],
+      bookings: [],
+      settings: {
+        whatsapp: '6281200000000',
+        bank: 'Bank Syariah Indonesia (BSI)',
+        account: '7123456789',
+        account_name: 'AcehHypeTrip Open Trip',
+        qris: '',
+        about_badge: 'Tentang AcehHypeTrip',
+        about_title: 'Menjangkau Spot Alami yang Jarang Dikunjungi.',
+        about_description: 'Dari pesisir tenang Lhok Ketapang dan Lhok Mata Ie, luasnya Savana Siron dan Bukit Cot Goh Dua, hingga segarnya Air Terjun Luthu, Selawah Agam, Monceunong, dan Peuncari Cot—kami kemas dalam perjalanan terarah dan berkesan.',
+        about_cta_text: 'Hubungi via WhatsApp',
+        about_image: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1000&q=80'
+      }
+    };
+
+    const DATA_KEY = 'acehhypetrip_prod_v1';
+    const SESSION_KEY = 'acehhypetrip_admin_session';
+    const AUTH_KEY = 'acehhypetrip_admin_auth_v1';
+    const store = {
+      destinations: [], gallery: [], bookings: [], settings: {},
+      filters: { query: '', location: '' }, adminTab: 'destinations', editingDestinationId: null
+    };
+
+    const escapeHtml = (s) => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    const formatRupiah = (n) => 'Rp ' + Number(n || 0).toLocaleString('id-ID');
+    const formatDateId = (s) => { const d = new Date(`${s}T00:00:00`); return isNaN(d.getTime()) ? (s || '-') : d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }); };
+    const normalizePhone = (p) => { let d = String(p ?? '').replace(/\D/g, ''); return d.startsWith('0') ? '62' + d.slice(1) : d; };
+    const sanitizeUrl = (u, fb = '') => { const r = String(u ?? '').trim(); if (!r) return fb; if (r.startsWith('data:image/') || r.startsWith('http://') || r.startsWith('https://')) return r; return fb; };
+
+    function hashPass(text) {
+      let h = 2166136261;
+      const p = 'AHT_PROD_SALT::' + String(text || '');
+      for (let i = 0; i < p.length; i++) { h ^= p.charCodeAt(i); h += (h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24); }
+      return (h >>> 0).toString(16);
+    }
+
+    function loadData() {
+      try {
+        const raw = localStorage.getItem(DATA_KEY);
+        const data = raw ? JSON.parse(raw) : JSON.parse(JSON.stringify(SEED_DATA));
+        store.destinations = data.destinations || [];
+        store.gallery = data.gallery || [];
+        store.bookings = data.bookings || [];
+        store.settings = { ...SEED_DATA.settings, ...(data.settings || {}) };
+      } catch {
+        const fresh = JSON.parse(JSON.stringify(SEED_DATA));
+        Object.assign(store, fresh);
+      }
+      if (!localStorage.getItem(AUTH_KEY)) {
+        localStorage.setItem(AUTH_KEY, JSON.stringify({ username: 'admin', passHash: hashPass('acehhype2026') }));
+      }
+    }
+
+    function saveData() {
+      localStorage.setItem(DATA_KEY, JSON.stringify({
+        destinations: store.destinations, gallery: store.gallery, bookings: store.bookings, settings: store.settings
+      }));
+    }
+
+    function showToast(msg, type = 'info') {
+      const box = document.getElementById('toast-container');
+      const el = document.createElement('div');
+      el.className = `toast ${type === 'error' ? 'toast--error' : ''}`;
+      el.textContent = msg;
+      box.appendChild(el);
+      setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.remove(), 250); }, 2800);
+    }
+
+    function openImageModal(title, src, caption = '') {
+      const dialog = document.getElementById('app-modal');
+      document.getElementById('app-modal-title').textContent = title;
+      document.getElementById('app-modal-body').innerHTML = `<img src="${escapeHtml(src)}" alt="${escapeHtml(title)}" style="width:100%;max-height:70vh;object-fit:contain;border-radius:0.5rem;background:#123524;" />${caption ? `<p class="form-hint" style="margin-top:0.75rem;font-size:0.85rem;">${escapeHtml(caption)}</p>` : ''}`;
+      dialog.showModal();
+    }
+
+    function openMapModal(trip) {
+      const query = encodeURIComponent(trip.map_query || `${trip.name}, ${trip.location}, Aceh`);
+      const embedUrl = `https://maps.google.com/maps?q=${query}&z=13&output=embed`;
+      const directUrl = `https://www.google.com/maps/search/?api=1&query=${query}`;
+      const dialog = document.getElementById('app-modal');
+      document.getElementById('app-modal-title').textContent = `Peta Lokasi — ${trip.name}`;
+      document.getElementById('app-modal-body').innerHTML = `
+        <p class="text-muted" style="font-size:0.85rem;margin-bottom:0.75rem;">📍 ${escapeHtml(trip.location)}</p>
+        <div style="border-radius:0.5rem;overflow:hidden;border:1px solid var(--color-border-strong);background:var(--color-sage);">
+          <iframe title="Peta ${escapeHtml(trip.name)}" src="${embedUrl}" width="100%" height="340" style="border:0;display:block;" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        </div>
+        <div style="margin-top:0.9rem;display:flex;justify-content:space-between;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+          <span class="form-hint" style="margin:0;">Titik pencarian: ${escapeHtml(trip.map_query || trip.name)}</span>
+          <a href="${directUrl}" target="_blank" rel="noopener noreferrer" class="btn btn--primary btn--sm">Buka Rute di Google Maps ↗</a>
+        </div>
+      `;
+      dialog.showModal();
+    }
+
+    function compressImage(file, maxW = 960) {
+      return new Promise((resolve, reject) => {
+        const r = new FileReader();
+        r.onerror = () => reject(new Error('Gagal membaca file.'));
+        r.onload = () => {
+          const img = new Image();
+          img.onerror = () => reject(new Error('Gambar tidak valid.'));
+          img.onload = () => {
+            const sc = img.width > maxW ? maxW / img.width : 1;
+            const c = document.createElement('canvas');
+            c.width = Math.round(img.width * sc);
+            c.height = Math.round(img.height * sc);
+            c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+            resolve(c.toDataURL('image/jpeg', 0.78));
+          };
+          img.src = r.result;
+        };
+        r.readAsDataURL(file);
+      });
+    }
+
+    const isAdmin = () => sessionStorage.getItem(SESSION_KEY) === 'verified';
+
+    function renderHome(root) {
+      const active = store.destinations.filter(d => d.status === 'Aktif');
+      const locs = [...new Set(active.map(d => d.location))].sort();
+      const wa = normalizePhone(store.settings.whatsapp || '6281200000000');
+      const aboutImg = sanitizeUrl(store.settings.about_image, FALLBACK_IMG);
+
+      root.innerHTML = `
+        <div class="view-animate">
+          <section class="hero-banner">
+            <div class="container hero-content">
+              <span class="badge badge--ochre" style="margin-bottom:1.25rem;">Off-the-Beaten-Path Aceh</span>
+              <h1 class="hero-title">Jelajahi Sudut Tersembunyi &amp; Alam Aceh yang Jarang Dijamah.</h1>
+              <p class="hero-desc">Open trip pilihan menuju Lhok Ketapang, Savana Siron, Lhok Mata Ie, Air Terjun Luthu, Air Terjun Selawah Agam, Air Terjun Monceunong, Air Terjun Peuncari Cot, dan Bukit Cot Goh Dua.</p>
+              <div class="hero-actions">
+                <a href="#catalog" class="btn btn--ochre btn--lg">Jelajahi Rute Hidden Gem</a>
+                <a href="#track" class="btn btn--ghost btn--lg">Cek Status Pesanan</a>
+              </div>
+            </div>
+          </section>
+
+          <section id="catalog" class="container section-pad">
+            <div class="section-header">
+              <h2>Open Trip Rute Tersembunyi</h2>
+              <p class="text-muted">Temukan jadwal trip sekaligus cek peta lokasi titik tujuan sebelum memesan.</p>
+            </div>
+            <div class="editorial-card filter-bar">
+              <div>
+                <label class="form-label">Cari Destinasi atau Deskripsi</label>
+                <input id="search-input" class="form-control" type="text" value="${escapeHtml(store.filters.query)}" placeholder="Contoh: Lhok Ketapang, Savana Siron, Luthu..." />
+              </div>
+              <div>
+                <label class="form-label">Filter Lokasi</label>
+                <select id="location-filter" class="form-control">
+                  <option value="">Semua Lokasi (${active.length})</option>
+                  ${locs.map(l => `<option value="${escapeHtml(l)}" ${store.filters.location === l ? 'selected' : ''}>${escapeHtml(l)}</option>`).join('')}
+                </select>
+              </div>
+              <div><button id="btn-clear-filter" type="button" class="btn btn--sage btn--full">Reset</button></div>
+            </div>
+            <div id="destinations-grid" class="grid-cards"></div>
+          </section>
+
+          <section id="about" class="about-band section-pad">
+            <div class="container grid-2">
+              <div>
+                <span class="badge badge--ochre" style="margin-bottom:0.8rem;">${escapeHtml(store.settings.about_badge || 'Tentang AcehHypeTrip')}</span>
+                <h2 style="font-size:clamp(1.5rem,3vw,2.25rem);margin-bottom:1rem;">${escapeHtml(store.settings.about_title)}</h2>
+                <p style="margin-bottom:1.5rem;line-height:1.7;color:rgba(18,53,36,0.84);white-space:pre-line;">${escapeHtml(store.settings.about_description)}</p>
+                <a href="https://wa.me/${escapeHtml(wa)}" target="_blank" rel="noopener noreferrer" class="btn btn--forest">${escapeHtml(store.settings.about_cta_text || 'Hubungi via WhatsApp')}</a>
+              </div>
+              <div><img src="${escapeHtml(aboutImg)}" onerror="this.src=FALLBACK_IMG" alt="${escapeHtml(store.settings.about_title)}" class="about-img" /></div>
+            </div>
+          </section>
+
+          <section id="gallery" class="container section-pad">
+            <div class="section-header">
+              <h2>Galeri Perjalanan</h2>
+              <p class="text-muted">Dokumentasi jalur alam, air terjun, perbukitan, dan pesisir Aceh. Klik foto untuk memperbesar.</p>
+            </div>
+            <div class="grid-gallery">
+              ${store.gallery.map(g => `
+                <figure class="editorial-card editorial-card--hover gallery-card" data-img="${escapeHtml(sanitizeUrl(g.image, FALLBACK_IMG))}" data-cap="${escapeHtml(g.caption)}">
+                  <img src="${escapeHtml(sanitizeUrl(g.image, FALLBACK_IMG))}" onerror="this.src=FALLBACK_IMG" alt="${escapeHtml(g.caption)}" />
+                  <figcaption>${escapeHtml(g.caption)}</figcaption>
+                </figure>
+              `).join('')}
+            </div>
+          </section>
+        </div>
+      `;
+
+      const drawCards = () => {
+        const q = store.filters.query.trim().toLowerCase();
+        const loc = store.filters.location;
+        const list = store.destinations.filter(d => d.status === 'Aktif' && (!q || d.name.toLowerCase().includes(q) || d.location.toLowerCase().includes(q) || d.description.toLowerCase().includes(q)) && (!loc || d.location === loc));
+        const grid = root.querySelector('#destinations-grid');
+        grid.innerHTML = list.length ? list.map(t => `
+          <article class="editorial-card editorial-card--hover trip-card">
+            <div class="trip-card__media">
+              <img src="${escapeHtml(sanitizeUrl(t.image, FALLBACK_IMG))}" onerror="this.src=FALLBACK_IMG" alt="${escapeHtml(t.name)}" />
+              <button type="button" class="trip-card__map-chip" data-map-id="${t.id}">📍 Lihat Peta</button>
+            </div>
+            <div class="trip-card__body">
+              <span class="badge badge--date">${escapeHtml(formatDateId(t.trip_date))}</span>
+              <h3 class="trip-card__title">${escapeHtml(t.name)}</h3>
+              <div class="trip-card__loc"><span>📌 ${escapeHtml(t.location)}</span></div>
+              <p class="trip-card__desc">${escapeHtml(t.description)}</p>
+              <div class="trip-card__footer">
+                <div>
+                  <div class="price-tag">${formatRupiah(t.price)} <span>/ orang</span></div>
+                  <div class="form-hint">${t.quota <= 0 ? '<strong class="text-terracotta">Kuota Penuh</strong>' : `Kuota tersedia: <strong>${t.quota}</strong> peserta`}</div>
+                </div>
+                <a href="#book/${t.id}" class="btn btn--primary btn--sm ${t.quota <= 0 ? 'btn--sage' : ''}" ${t.quota <= 0 ? 'onclick="return false;"' : ''}>${t.quota <= 0 ? 'Penuh' : 'Pesan Sekarang'}</a>
+              </div>
+            </div>
+          </article>
+        `).join('') : '<div class="editorial-card card-pad" style="grid-column:1/-1;text-align:center;">Tidak ada destinasi yang sesuai filter.</div>';
+
+        grid.querySelectorAll('[data-map-id]').forEach(btn => {
+          btn.onclick = () => {
+            const trip = store.destinations.find(d => d.id === Number(btn.dataset.mapId));
+            if (trip) openMapModal(trip);
+          };
+        });
+      };
+
+      drawCards();
+      root.querySelector('#search-input').oninput = (e) => { store.filters.query = e.target.value; drawCards(); };
+      root.querySelector('#location-filter').onchange = (e) => { store.filters.location = e.target.value; drawCards(); };
+      root.querySelector('#btn-clear-filter').onclick = () => { store.filters.query = ''; store.filters.location = ''; root.querySelector('#search-input').value = ''; root.querySelector('#location-filter').value = ''; drawCards(); };
+      root.querySelectorAll('.gallery-card').forEach(c => { c.onclick = () => openImageModal('Dokumentasi Perjalanan', c.dataset.img, c.dataset.cap); });
+    }
+
+    function renderBook(root, id) {
+      const trip = store.destinations.find(d => d.id === Number(id) && d.status === 'Aktif');
+      if (!trip || trip.quota <= 0) {
+        root.innerHTML = `<div class="container section-pad narrow-wrap"><a href="#home" class="back-link">← Kembali</a><div class="editorial-card card-pad"><h2>Destinasi tidak tersedia atau kuota penuh.</h2></div></div>`;
+        return;
+      }
+      root.innerHTML = `
+        <div class="container section-pad narrow-wrap view-animate">
+          <a href="#home" class="back-link">← Kembali ke Daftar Destinasi</a>
+          <div class="editorial-card card-pad">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.65rem;">
+              <span class="badge badge--ochre badge--pill">Form Pemesanan Trip</span>
+              <button id="book-map-btn" type="button" class="btn btn--outline btn--xs">📍 Cek Peta Lokasi</button>
+            </div>
+            <h2 style="font-size:1.65rem;margin-bottom:0.25rem;">${escapeHtml(trip.name)}</h2>
+            <p class="text-terracotta" style="font-size:0.88rem;font-weight:700;margin-bottom:1.5rem;">${escapeHtml(trip.location)} • ${escapeHtml(formatDateId(trip.trip_date))} • ${formatRupiah(trip.price)} / peserta</p>
+            <form id="book-form" class="form-stack">
+              <div><label class="form-label">Nama Lengkap</label><input id="b-name" class="form-control" type="text" required placeholder="Nama peserta utama" /></div>
+              <div><label class="form-label">Nomor WhatsApp</label><input id="b-wa" class="form-control" type="tel" required placeholder="0812xxxxxxxx" /></div>
+              <div class="form-grid-2">
+                <div><label class="form-label">Jumlah Peserta</label><input id="b-pax" class="form-control" type="number" min="1" max="${trip.quota}" value="1" required /><p class="form-hint">Maksimal kuota: ${trip.quota} peserta</p></div>
+                <div><label class="form-label">Metode Pembayaran</label><select id="b-method" class="form-control"><option value="Transfer Bank">Transfer Bank</option><option value="QRIS">QRIS</option></select></div>
+              </div>
+              <div class="summary-box"><span style="font-weight:700;">Total Estimasi Bayar:</span><span id="b-total" class="text-terracotta" style="font-size:1.4rem;font-weight:800;">${formatRupiah(trip.price)}</span></div>
+              <p id="b-err" class="alert-error hidden"></p>
+              <button type="submit" class="btn btn--primary btn--lg btn--full">Lanjut ke Pembayaran →</button>
+            </form>
+          </div>
+        </div>
+      `;
+      root.querySelector('#book-map-btn').onclick = () => openMapModal(trip);
+      const paxEl = root.querySelector('#b-pax');
+      paxEl.oninput = () => {
+        let v = Math.min(trip.quota, Math.max(1, parseInt(paxEl.value, 10) || 1));
+        paxEl.value = v;
+        root.querySelector('#b-total').textContent = formatRupiah(v * trip.price);
+      };
+      root.querySelector('#book-form').onsubmit = (e) => {
+        e.preventDefault();
+        const name = root.querySelector('#b-name').value.trim();
+        const wa = root.querySelector('#b-wa').value.trim();
+        const pax = parseInt(paxEl.value, 10) || 1;
+        if (!/^628\d{8,12}$/.test(normalizePhone(wa))) {
+          const err = root.querySelector('#b-err');
+          err.textContent = 'Masukkan nomor WhatsApp aktif Indonesia (cth: 0812xxxxxxxx).';
+          err.classList.remove('hidden');
+          return;
+        }
+        trip.quota -= pax;
+        const code = 'AHT' + new Date().toISOString().slice(2, 10).replace(/-/g, '') + Math.random().toString(36).substring(2, 6).toUpperCase();
+        store.bookings.unshift({
+          booking_code: code, destination_id: trip.id, destination_name: trip.name, customer_name: name,
+          whatsapp: wa, participants: pax, total_price: pax * trip.price,
+          payment_method: root.querySelector('#b-method').value, payment_proof: '', payment_proof_name: '', status: 'Menunggu Pembayaran'
+        });
+        saveData();
+        showToast(`Booking ${code} berhasil dibuat.`);
+        location.hash = `#payment/${code}`;
+      };
+    }
+
+    function renderPayment(root, code) {
+      const b = store.bookings.find(x => x.booking_code === code);
+      if (!b) {
+        root.innerHTML = `<div class="container section-pad narrow-wrap"><a href="#home" class="back-link">← Kembali</a><div class="editorial-card card-pad"><h2>Data pemesanan tidak ditemukan.</h2></div></div>`;
+        return;
+      }
+      const methodBox = b.payment_method === 'QRIS'
+        ? `<div style="background:var(--color-sage);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:1rem;"><p class="form-label">Metode QRIS</p><div style="padding:0.85rem;background:#fff;border:1px dashed rgba(18,53,36,0.3);border-radius:0.5rem;font-size:0.82rem;"><strong>QRIS AcehHypeTrip</strong><br/>NMID: ID1026000888999 • A/N: ${escapeHtml(store.settings.account_name)}</div></div>`
+        : `<div style="background:var(--color-sage);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:1rem;font-size:0.88rem;line-height:1.7;"><p class="form-label">Instruksi Transfer Bank</p><p>Bank: <strong>${escapeHtml(store.settings.bank)}</strong></p><p>Rekening: <strong class="text-terracotta">${escapeHtml(store.settings.account)}</strong> <button id="cp-acc" type="button" class="btn btn--outline btn--xs">Salin</button></p><p>A/N: <strong>${escapeHtml(store.settings.account_name)}</strong></p></div>`;
+
+      root.innerHTML = `
+        <div class="container section-pad narrow-wrap view-animate">
+          <a href="#home" class="back-link">← Kembali ke Beranda</a>
+          <div class="editorial-card card-pad form-stack">
+            <div style="display:flex;justify-content:space-between;align-items:center;"><span class="badge badge--ochre badge--pill">Pembayaran Open Trip</span><span class="badge badge--pill badge--status-muted">${escapeHtml(b.status)}</span></div>
+            <h2 style="font-size:1.6rem;">${escapeHtml(b.destination_name)}</h2>
+            <div style="border-top:1px solid #e8dfd1;padding-top:0.75rem;font-size:0.88rem;line-height:1.7;">
+              <p>Kode Booking: <strong class="font-mono">${escapeHtml(b.booking_code)}</strong> <button id="cp-code" type="button" class="btn btn--outline btn--xs">Salin</button></p>
+              <p>Peserta: <strong>${escapeHtml(b.customer_name)}</strong> (${escapeHtml(b.whatsapp)}) • ${b.participants} orang</p>
+            </div>
+            <div><span class="form-label text-muted">Total Pembayaran</span><div class="text-terracotta" style="font-size:1.85rem;font-weight:800;">${formatRupiah(b.total_price)}</div></div>
+            ${methodBox}
+            ${b.payment_proof ? `<div style="background:var(--color-success-bg);border:1px solid var(--color-success-border);border-radius:var(--radius-md);padding:0.85rem;font-size:0.8rem;"><p style="font-weight:700;margin-bottom:0.5rem;">Bukti terunggah:</p><img src="${escapeHtml(b.payment_proof)}" style="max-height:12rem;border-radius:0.5rem;" /></div>` : ''}
+            <form id="proof-form" class="form-stack" style="border-top:1px solid #e8dfd1;padding-top:1rem;">
+              <div><label class="form-label">Unggah Bukti Pembayaran (JPG, PNG, WEBP)</label><input id="p-file" class="form-control" type="file" accept="image/jpeg,image/png,image/webp" required /></div>
+              <button type="submit" class="btn btn--primary btn--full">Kirim Bukti Pembayaran</button>
+            </form>
+          </div>
+        </div>
+      `;
+      root.querySelector('#cp-acc')?.addEventListener('click', () => { navigator.clipboard?.writeText(store.settings.account); showToast('Rekening disalin.'); });
+      root.querySelector('#cp-code')?.addEventListener('click', () => { navigator.clipboard?.writeText(b.booking_code); showToast('Kode booking disalin.'); });
+      root.querySelector('#proof-form').onsubmit = async (e) => {
+        e.preventDefault();
+        const file = root.querySelector('#p-file').files[0];
+        if (!file) return;
+        b.payment_proof = await compressImage(file);
+        b.payment_proof_name = file.name;
+        b.status = 'Menunggu Verifikasi';
+        saveData();
+        showToast('Bukti pembayaran terkirim!');
+        renderPayment(root, code);
+      };
+    }
+
+    function renderTrack(root) {
+      root.innerHTML = `
+        <div class="container section-pad narrow-wrap view-animate">
+          <a href="#home" class="back-link">← Kembali ke Beranda</a>
+          <div class="editorial-card card-pad">
+            <span class="badge badge--ochre badge--pill" style="margin-bottom:0.65rem;">Lacak Pemesanan</span>
+            <h2 style="font-size:1.65rem;margin-bottom:0.35rem;">Cek Status Pesanan Saya</h2>
+            <p class="text-muted" style="font-size:0.875rem;margin-bottom:1.5rem;">Masukkan Kode Booking dan Nomor WhatsApp yang digunakan saat mendaftar.</p>
+            <form id="track-form" class="form-stack">
+              <div><label class="form-label">Kode Booking</label><input id="t-code" class="form-control font-mono" type="text" required placeholder="Contoh: AHT261125XYZ" /></div>
+              <div><label class="form-label">Nomor WhatsApp</label><input id="t-wa" class="form-control" type="tel" required placeholder="0812xxxxxxxx" /></div>
+              <p id="t-err" class="alert-error hidden"></p>
+              <button type="submit" class="btn btn--forest btn--full">Cari Pesanan</button>
+            </form>
+            <div id="t-res" class="hidden" style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid #e8dfd1;"></div>
+          </div>
+        </div>
+      `;
+      root.querySelector('#track-form').onsubmit = (e) => {
+        e.preventDefault();
+        const code = root.querySelector('#t-code').value.trim().toUpperCase();
+        const wa = normalizePhone(root.querySelector('#t-wa').value);
+        const found = store.bookings.find(b => b.booking_code.toUpperCase() === code && normalizePhone(b.whatsapp) === wa);
+        const err = root.querySelector('#t-err'), res = root.querySelector('#t-res');
+        if (!found) { res.classList.add('hidden'); err.textContent = 'Pesanan tidak ditemukan.'; err.classList.remove('hidden'); return; }
+        err.classList.add('hidden');
+        res.innerHTML = `<div class="form-stack"><div style="display:flex;justify-content:space-between;"><strong class="font-mono">${escapeHtml(found.booking_code)}</strong><span class="badge badge--pill badge--status-ok">${escapeHtml(found.status)}</span></div><p>Destinasi: <strong>${escapeHtml(found.destination_name)}</strong> (${found.participants} orang)</p><a href="#payment/${escapeHtml(found.booking_code)}" class="btn btn--primary btn--sm" style="align-self:flex-start;">Buka Halaman Pembayaran →</a></div>`;
+        res.classList.remove('hidden');
+      };
+    }
+
+    function renderAdminLogin(root) {
+      root.innerHTML = `
+        <div class="container section-pad narrow-wrap-sm view-animate">
+          <a href="#home" class="back-link">← Kembali ke Beranda</a>
+          <div class="editorial-card card-pad">
+            <span class="badge badge--forest" style="margin-bottom:0.75rem;">Akses Terbatas</span>
+            <h2 style="font-size:1.6rem;margin-bottom:0.35rem;">Login Khusus Admin</h2>
+            <p class="text-muted" style="font-size:0.84rem;margin-bottom:1.5rem;">Halaman ini hanya untuk pengelola AcehHypeTrip. Pengguna umum tidak memiliki akses masuk.</p>
+            <form id="login-form" class="form-stack">
+              <div><label class="form-label">Username Admin</label><input id="l-user" class="form-control" type="text" required placeholder="Masukkan username admin" /></div>
+              <div><label class="form-label">Password</label><input id="l-pass" class="form-control" type="password" required placeholder="Masukkan password admin" /></div>
+              <p id="l-err" class="alert-error hidden"></p>
+              <button type="submit" class="btn btn--forest btn--lg btn--full">Masuk ke Dashboard Admin</button>
+            </form>
+          </div>
+        </div>
+      `;
+      root.querySelector('#login-form').onsubmit = (e) => {
+        e.preventDefault();
+        const creds = JSON.parse(localStorage.getItem(AUTH_KEY));
+        if (root.querySelector('#l-user').value.trim() === creds.username && hashPass(root.querySelector('#l-pass').value) === creds.passHash) {
+          sessionStorage.setItem(SESSION_KEY, 'verified');
+          showToast('Login berhasil.');
+          location.hash = '#admin';
+        } else {
+          const err = root.querySelector('#l-err');
+          err.textContent = 'Username atau password salah.';
+          err.classList.remove('hidden');
+        }
+      };
+    }
+
+    function renderAdmin(root) {
+      if (!isAdmin()) { location.hash = '#admin-login'; return; }
+      const pending = store.bookings.filter(b => b.status === 'Menunggu Verifikasi').length;
+      const editItem = store.editingDestinationId ? store.destinations.find(d => d.id === store.editingDestinationId) : null;
+      const tabLabels = { destinations: 'Destinasi', bookings: 'Pemesanan', gallery: 'Galeri', about: 'Tentang Kami', settings: 'Pengaturan' };
+
+      root.innerHTML = `
+        <div class="container section-pad-sm view-animate">
+          <div class="admin-header">
+            <div><span class="badge badge--ochre" style="margin-bottom:0.35rem;">Sesi Admin Terverifikasi</span><h2 style="font-size:1.75rem;">Dashboard Admin AcehHypeTrip</h2></div>
+            <div style="display:flex;gap:0.5rem;">
+              <button id="adm-reset" type="button" class="btn btn--danger btn--sm">Reset Data</button>
+              <button id="adm-logout" type="button" class="btn btn--forest btn--sm">Keluar (Logout)</button>
+            </div>
+          </div>
+          <div class="grid-stats">
+            <div class="editorial-card card-pad"><span class="form-label text-muted">Destinasi</span><strong style="font-size:1.6rem;">${store.destinations.length}</strong></div>
+            <div class="editorial-card card-pad"><span class="form-label text-muted">Pemesanan</span><strong style="font-size:1.6rem;">${store.bookings.length}</strong></div>
+            <div class="editorial-card card-pad"><span class="form-label text-muted">Perlu Verifikasi</span><strong class="text-terracotta" style="font-size:1.6rem;">${pending}</strong></div>
+            <div class="editorial-card card-pad"><span class="form-label text-muted">Galeri</span><strong style="font-size:1.6rem;">${store.gallery.length}</strong></div>
+          </div>
+          <div class="admin-tabs">
+            ${Object.keys(tabLabels).map(t => `<button type="button" data-tab="${t}" class="btn btn--sm ${store.adminTab === t ? 'btn--forest' : 'btn--outline'}">${tabLabels[t]}</button>`).join('')}
+          </div>
+          <div id="adm-body"></div>
+        </div>
+      `;
+
+      root.querySelector('#adm-logout').onclick = () => { sessionStorage.removeItem(SESSION_KEY); showToast('Logout berhasil.'); location.hash = '#home'; };
+      root.querySelector('#adm-reset').onclick = () => { localStorage.removeItem(DATA_KEY); loadData(); showToast('Data direset.'); renderAdmin(root); };
+      root.querySelectorAll('.admin-tabs button').forEach(b => { b.onclick = () => { store.adminTab = b.dataset.tab; renderAdmin(root); }; });
+
+      const body = root.querySelector('#adm-body');
+      if (store.adminTab === 'destinations') {
+        body.innerHTML = `
+          <div class="form-stack">
+            <div class="editorial-card card-pad">
+              <div style="display:flex;justify-content:space-between;margin-bottom:1rem;">
+                <h3>${editItem ? 'Edit Destinasi: ' + escapeHtml(editItem.name) : 'Tambah Destinasi Open Trip'}</h3>
+                ${editItem ? '<button id="cancel-ed" type="button" class="btn btn--sage btn--sm">Batal Edit</button>' : ''}
+              </div>
+              <form id="d-form" class="form-grid-3">
+                <div><label class="form-label">Nama</label><input id="d-name" class="form-control" required value="${escapeHtml(editItem?.name || '')}" /></div>
+                <div><label class="form-label">Lokasi</label><input id="d-loc" class="form-control" required value="${escapeHtml(editItem?.location || '')}" /></div>
+                <div><label class="form-label">Titik Maps / Koordinat</label><input id="d-map" class="form-control" value="${escapeHtml(editItem?.map_query || '')}" placeholder="Cth: 5.554,95.221 atau Nama Tempat" /></div>
+                <div><label class="form-label">Tanggal</label><input id="d-date" class="form-control" type="date" required value="${escapeHtml(editItem?.trip_date || '2026-12-28')}" /></div>
+                <div><label class="form-label">Harga</label><input id="d-price" class="form-control" type="number" required value="${editItem?.price ?? 175000}" /></div>
+                <div><label class="form-label">Kuota</label><input id="d-quota" class="form-control" type="number" required value="${editItem?.quota ?? 16}" /></div>
+                <div><label class="form-label">Status</label><select id="d-status" class="form-control"><option value="Aktif" ${editItem?.status !== 'Draft' ? 'selected' : ''}>Aktif</option><option value="Draft" ${editItem?.status === 'Draft' ? 'selected' : ''}>Draft</option></select></div>
+                <div><label class="form-label">URL Foto (Opsional)</label><input id="d-url" class="form-control" type="url" value="${escapeHtml(editItem?.image?.startsWith('http') ? editItem.image : '')}" /></div>
+                <div><label class="form-label">Atau Unggah Foto Lokal</label><input id="d-file" class="form-control" type="file" accept="image/jpeg,image/png,image/webp" /></div>
+                <div style="grid-column:1/-1;"><label class="form-label">Deskripsi</label><input id="d-desc" class="form-control" required value="${escapeHtml(editItem?.description || '')}" /></div>
+                <div style="grid-column:1/-1;"><button type="submit" class="btn btn--primary">${editItem ? 'Simpan Perubahan' : '+ Tambah Destinasi'}</button></div>
+              </form>
+            </div>
+            <div class="editorial-card table-wrap"><table class="data-table"><thead><tr><th>Nama</th><th>Lokasi</th><th>Tanggal</th><th>Harga</th><th>Kuota</th><th>Maps</th><th>Status</th><th style="text-align:right;">Aksi</th></tr></thead><tbody>
+              ${store.destinations.map(d => `<tr><td><strong>${escapeHtml(d.name)}</strong></td><td>${escapeHtml(d.location)}</td><td>${formatDateId(d.trip_date)}</td><td class="text-terracotta">${formatRupiah(d.price)}</td><td>${d.quota}</td><td><button type="button" data-adm-map="${d.id}" class="btn btn--outline btn--xs">📍 Cek</button></td><td>${d.status}</td><td style="text-align:right;"><button type="button" data-ed="${d.id}" class="btn btn--outline btn--sm">Edit</button> <button type="button" data-dl="${d.id}" class="btn btn--danger btn--sm">Hapus</button></td></tr>`).join('')}
+            </tbody></table></div>
+          </div>
+        `;
+        body.querySelector('#cancel-ed')?.addEventListener('click', () => { store.editingDestinationId = null; renderAdmin(root); });
+        body.querySelector('#d-form').onsubmit = async (e) => {
+          e.preventDefault();
+          const name = body.querySelector('#d-name').value.trim();
+          const loc = body.querySelector('#d-loc').value.trim();
+          const mapQ = body.querySelector('#d-map').value.trim() || `${name}, ${loc}, Aceh`;
+          const file = body.querySelector('#d-file')?.files?.[0];
+          const img = file ? await compressImage(file) : sanitizeUrl(body.querySelector('#d-url').value, editItem?.image || FALLBACK_IMG);
+          const payload = {
+            name, location: loc, map_query: mapQ,
+            trip_date: body.querySelector('#d-date').value, price: Number(body.querySelector('#d-price').value) || 0,
+            quota: Number(body.querySelector('#d-quota').value) || 0, status: body.querySelector('#d-status').value,
+            image: img, description: body.querySelector('#d-desc').value.trim()
+          };
+          if (editItem) Object.assign(editItem, payload);
+          else store.destinations.unshift({ id: Date.now(), ...payload });
+          store.editingDestinationId = null; saveData(); showToast('Destinasi disimpan.'); renderAdmin(root);
+        };
+        body.querySelectorAll('[data-adm-map]').forEach(b => b.onclick = () => { const t = store.destinations.find(d => d.id === Number(b.dataset.admMap)); if (t) openMapModal(t); });
+        body.querySelectorAll('[data-ed]').forEach(b => b.onclick = () => { store.editingDestinationId = Number(b.dataset.ed); renderAdmin(root); });
+        body.querySelectorAll('[data-dl]').forEach(b => b.onclick = () => { store.destinations = store.destinations.filter(d => d.id !== Number(b.dataset.dl)); saveData(); renderAdmin(root); });
+      } else if (store.adminTab === 'bookings') {
+        const statuses = ['Menunggu Pembayaran', 'Menunggu Verifikasi', 'Diterima', 'Ditolak'];
+        body.innerHTML = `<div class="editorial-card table-wrap"><table class="data-table"><thead><tr><th>Kode</th><th>Peserta</th><th>Destinasi</th><th>Total</th><th>Bukti</th><th>Status</th></tr></thead><tbody>
+          ${store.bookings.length ? store.bookings.map(b => `<tr><td class="font-mono">${escapeHtml(b.booking_code)}</td><td><strong>${escapeHtml(b.customer_name)}</strong><br/><span class="text-muted">${escapeHtml(b.whatsapp)}</span></td><td>${escapeHtml(b.destination_name)} (${b.participants} org)</td><td class="text-terracotta">${formatRupiah(b.total_price)}</td><td>${b.payment_proof ? `<button type="button" data-pf="${b.booking_code}" class="btn btn--outline btn--sm">Lihat Bukti</button>` : 'Belum ada'}</td><td><select data-st="${b.booking_code}" class="form-control" style="padding:0.3rem;font-size:0.75rem;">${statuses.map(s => `<option ${b.status === s ? 'selected' : ''}>${s}</option>`).join('')}</select></td></tr>`).join('') : '<tr><td colspan="6" style="text-align:center;padding:2rem;">Belum ada pemesanan masuk.</td></tr>'}
+        </tbody></table></div>`;
+        body.querySelectorAll('[data-pf]').forEach(btn => btn.onclick = () => { const bk = store.bookings.find(x => x.booking_code === btn.dataset.pf); if (bk) openImageModal('Bukti ' + bk.booking_code, bk.payment_proof); });
+        body.querySelectorAll('[data-st]').forEach(sel => sel.onchange = () => { const bk = store.bookings.find(x => x.booking_code === sel.dataset.st); if (bk) { bk.status = sel.value; saveData(); showToast('Status diperbarui.'); renderAdmin(root); } });
+      } else if (store.adminTab === 'gallery') {
+        body.innerHTML = `<div class="form-stack"><div class="editorial-card card-pad"><form id="g-form" class="form-grid-3" style="align-items:end;"><div><label class="form-label">URL Foto (Opsional)</label><input id="g-url" class="form-control" type="url" placeholder="https://..." /></div><div><label class="form-label">Atau Unggah Foto Lokal</label><input id="g-file" class="form-control" type="file" accept="image/jpeg,image/png,image/webp" /></div><div><label class="form-label">Keterangan</label><input id="g-cap" class="form-control" required /></div><div style="grid-column:1/-1;"><button type="submit" class="btn btn--primary">+ Tambah Galeri</button></div></form></div><div class="grid-cards">${store.gallery.map(g => `<div class="editorial-card" style="overflow:hidden;"><img src="${escapeHtml(sanitizeUrl(g.image, FALLBACK_IMG))}" style="width:100%;height:11rem;object-fit:cover;" /><div style="padding:0.9rem;display:flex;justify-content:space-between;align-items:center;"><strong>${escapeHtml(g.caption)}</strong><button type="button" data-dg="${g.id}" class="btn btn--danger btn--sm">Hapus</button></div></div>`).join('')}</div></div>`;
+        body.querySelector('#g-form').onsubmit = async (e) => {
+          e.preventDefault();
+          const file = body.querySelector('#g-file')?.files?.[0];
+          const img = file ? await compressImage(file, 900) : sanitizeUrl(body.querySelector('#g-url').value, FALLBACK_IMG);
+          store.gallery.unshift({ id: Date.now(), image: img, caption: body.querySelector('#g-cap').value.trim() });
+          saveData(); showToast('Foto galeri ditambahkan.'); renderAdmin(root);
+        };
+        body.querySelectorAll('[data-dg]').forEach(b => b.onclick = () => { store.gallery = store.gallery.filter(g => g.id !== Number(b.dataset.dg)); saveData(); renderAdmin(root); });
+      } else if (store.adminTab === 'about') {
+        const curImg = sanitizeUrl(store.settings.about_image, FALLBACK_IMG);
+        body.innerHTML = `
+          <div class="editorial-card card-pad" style="max-width:48rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:0.5rem;flex-wrap:wrap;margin-bottom:1rem;">
+              <div>
+                <h3 style="font-size:1.2rem;">Edit Halaman Tentang Kami</h3>
+                <p class="form-hint">Perubahan langsung tampil di bagian Tentang Kami pada halaman utama.</p>
+              </div>
+              <a href="#about" class="btn btn--outline btn--sm">Lihat di Beranda ↗</a>
+            </div>
+            <form id="about-edit-form" class="form-stack">
+              <div class="form-grid-2">
+                <div>
+                  <label class="form-label">Badge / Label Atas</label>
+                  <input id="ab-badge" class="form-control" type="text" required value="${escapeHtml(store.settings.about_badge || '')}" />
+                </div>
+                <div>
+                  <label class="form-label">Teks Tombol CTA</label>
+                  <input id="ab-cta" class="form-control" type="text" required value="${escapeHtml(store.settings.about_cta_text || '')}" />
+                </div>
+              </div>
+              <div>
+                <label class="form-label">Judul Tentang Kami</label>
+                <input id="ab-title" class="form-control" type="text" required value="${escapeHtml(store.settings.about_title || '')}" />
+              </div>
+              <div>
+                <label class="form-label">Deskripsi Tentang Kami</label>
+                <textarea id="ab-desc" class="form-control" required>${escapeHtml(store.settings.about_description || '')}</textarea>
+              </div>
+              <div class="form-grid-2">
+                <div>
+                  <label class="form-label">URL Foto (Opsional)</label>
+                  <input id="ab-url" class="form-control" type="url" value="${escapeHtml(store.settings.about_image?.startsWith('http') ? store.settings.about_image : '')}" placeholder="https://..." />
+                </div>
+                <div>
+                  <label class="form-label">Atau Unggah Foto Baru dari Perangkat</label>
+                  <input id="ab-file" class="form-control" type="file" accept="image/jpeg,image/png,image/webp" />
+                </div>
+              </div>
+              <div>
+                <span class="form-label">Foto Tentang Kami Saat Ini</span>
+                <img id="ab-preview" src="${escapeHtml(curImg)}" onerror="this.src=FALLBACK_IMG" alt="Pratinjau Tentang Kami" style="width:100%;max-height:14rem;object-fit:cover;border-radius:var(--radius-md);border:1px solid var(--color-border-strong);" />
+              </div>
+              <div>
+                <button type="submit" class="btn btn--primary">Simpan Perubahan Tentang Kami</button>
+              </div>
+            </form>
+          </div>
+        `;
+        body.querySelector('#about-edit-form').onsubmit = async (e) => {
+          e.preventDefault();
+          const file = body.querySelector('#ab-file')?.files?.[0];
+          const urlVal = body.querySelector('#ab-url').value.trim();
+          const newImg = file
+            ? await compressImage(file, 1000)
+            : (urlVal ? sanitizeUrl(urlVal, curImg) : curImg);
+
+          store.settings = {
+            ...store.settings,
+            about_badge: body.querySelector('#ab-badge').value.trim(),
+            about_title: body.querySelector('#ab-title').value.trim(),
+            about_description: body.querySelector('#ab-desc').value.trim(),
+            about_cta_text: body.querySelector('#ab-cta').value.trim(),
+            about_image: newImg
+          };
+          saveData();
+          showToast('Halaman Tentang Kami berhasil diperbarui.');
+          renderAdmin(root);
+        };
+      } else {
+        body.innerHTML = `<div class="editorial-card card-pad" style="max-width:40rem;"><h3 style="margin-bottom:1rem;">Pengaturan Kontak &amp; Bank</h3><form id="s-form" class="form-stack"><div class="form-grid-2"><div><label class="form-label">WhatsApp</label><input id="s-wa" class="form-control" value="${escapeHtml(store.settings.whatsapp)}" /></div><div><label class="form-label">Bank</label><input id="s-bk" class="form-control" value="${escapeHtml(store.settings.bank)}" /></div><div><label class="form-label">No. Rekening</label><input id="s-ac" class="form-control" value="${escapeHtml(store.settings.account)}" /></div><div><label class="form-label">Atas Nama</label><input id="s-an" class="form-control" value="${escapeHtml(store.settings.account_name)}" /></div></div><button type="submit" class="btn btn--forest">Simpan Pengaturan</button></form></div>`;
+        body.querySelector('#s-form').onsubmit = (e) => { e.preventDefault(); store.settings = { ...store.settings, whatsapp: body.querySelector('#s-wa').value, bank: body.querySelector('#s-bk').value, account: body.querySelector('#s-ac').value, account_name: body.querySelector('#s-an').value }; saveData(); showToast('Pengaturan disimpan.'); };
+      }
+    }
+
+    function route() {
+      const main = document.getElementById('main-content');
+      const badge = document.getElementById('header-admin-badge');
+      badge.classList.toggle('hidden', !isAdmin());
+      document.getElementById('primary-nav').classList.remove('is-open');
+
+      const [r, p] = (location.hash.replace(/^#/, '') || 'home').split('/');
+      if (r === 'catalog' || r === 'gallery' || r === 'about') {
+        renderHome(main);
+        setTimeout(() => document.getElementById(r)?.scrollIntoView({ behavior: 'smooth' }), 40);
+      } else if (r === 'book' && p) renderBook(main, p);
+      else if (r === 'payment' && p) renderPayment(main, p);
+      else if (r === 'track') renderTrack(main);
+      else if (r === 'admin') renderAdmin(main);
+      else if (r === 'admin-login') isAdmin() ? (location.hash = '#admin') : renderAdminLogin(main);
+      else renderHome(main);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('mobile-menu-btn').onclick = () => document.getElementById('primary-nav').classList.toggle('is-open');
+    document.getElementById('app-modal-close').onclick = () => document.getElementById('app-modal').close();
+    document.getElementById('app-modal').onclick = (e) => { if (e.target.id === 'app-modal') e.target.close(); };
+    window.addEventListener('hashchange', route);
+    window.addEventListener('DOMContentLoaded', () => { loadData(); route(); });
+  </script>
+</body>
+</html>
